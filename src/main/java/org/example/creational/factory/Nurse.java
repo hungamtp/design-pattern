@@ -14,6 +14,8 @@ public class Nurse extends People{
         return age;
     }
     public Nurse (String name , Integer age) {
+        super.toString();
+        String x = super.color;
         this.name = name;
         this.age = age;
     }

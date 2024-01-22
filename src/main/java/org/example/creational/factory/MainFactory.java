@@ -6,6 +6,6 @@ public class MainFactory {
         People doctor = PeopleFactory.getComputer("D" , "Doctor" , 14);
         System.out.println(doctor);
         System.out.println(nurse);
-        var a = 5;
+        int a = 5;
     }
 }
