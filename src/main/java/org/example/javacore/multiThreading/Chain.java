@@ -1,6 +1,6 @@
 package org.example.javacore.multiThreading;
 
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.*;
 
 import static java.lang.Thread.sleep;
 
@@ -16,7 +16,7 @@ public class Chain {
             return name;
         }
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
         CompletableFuture<User> cf = CompletableFuture.supplyAsync(() -> {
             try {
                 return fetchUser(1);
@@ -30,7 +30,12 @@ public class Chain {
                 .thenAccept(name -> System.out.println("Hello " + name));
         cf.join(); // Wait for the chain to complete before exiting main
         System.out.println("Fetching user...");
-
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        Future<User>    userFuture    = executor.submit(() -> fetchUser(1));
+        String name = userFuture.get().name;
+        System.out.println("blocking call to get user name...");
+        System.out.println("Hello " + name);
+        executor.shutdown();
     }
 
 
